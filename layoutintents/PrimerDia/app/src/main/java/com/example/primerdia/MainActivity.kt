@@ -2,6 +2,7 @@ package com.example.primerdia
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val binding = ActivityMainBinding.inflate(layoutInflater)
+        Log.d("ciclo", "Estoy en Main onCreate")
     // Esto ya no se hace: setContentView(R.layout.activity_main)
         setContentView(binding.root)
 
@@ -40,5 +42,35 @@ class MainActivity : AppCompatActivity() {
                 binding.errorText.text = "Usuario o contraseña incorrectos"
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("ciclo", "Estoy en Main onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ciclo", "Estoy en Main onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ciclo", "Estoy en Main onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ciclo", "Estoy en Main onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("ciclo", "Estoy en Main onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("ciclo", "Estoy en Main onDestroy")
     }
 }

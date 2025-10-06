@@ -22,6 +22,8 @@ class WelcomeActivity : AppCompatActivity() {
         val binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.d("ciclo", "Estoy en Welcome onCreate")
+
         val user = intent.getStringExtra("user")
 
         binding.textView3.text = "Bienvenido $user"
@@ -45,6 +47,36 @@ class WelcomeActivity : AppCompatActivity() {
             var text = binding.editTextMain.text.toString()
             compartir(text)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("ciclo", "Estoy en Welcome onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ciclo", "Estoy en Welcome onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ciclo", "Estoy en Welcome onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("ciclo", "Estoy en Welcome onStop")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d("ciclo", "Estoy en Welcome onRestart")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("ciclo", "Estoy en Welcome onDestroy")
     }
 
     fun buscador(text : String){
