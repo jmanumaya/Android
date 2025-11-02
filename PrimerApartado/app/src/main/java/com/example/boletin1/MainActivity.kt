@@ -22,6 +22,7 @@ import com.example.boletin1.ejercicio6.Ejercicio6Activity
 import com.example.boletin1.ejercicio7.Ejercicio7Activity
 import com.example.boletin1.ejercicio8.Ejercicio8Activity
 import com.example.boletin1.ejercicio9.Ejercicio9Activity
+import com.example.boletin1.ejercicio10.Ejercicio10Activity
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +61,9 @@ class MainActivity : ComponentActivity() {
                         },
                         onOpenEjercicio9 = {
                             startActivity(Intent(this, Ejercicio9Activity::class.java))
+                        },
+                        onOpenEjercicio10 = {
+                            startActivity(Intent(this, Ejercicio10Activity::class.java))
                         }
 
                     )
@@ -80,7 +84,8 @@ fun MenuPrincipal(
     onOpenEjercicio6: () -> Unit,
     onOpenEjercicio7: () -> Unit,
     onOpenEjercicio8: () -> Unit,
-    onOpenEjercicio9: () -> Unit
+    onOpenEjercicio9: () -> Unit,
+    onOpenEjercicio10: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -115,6 +120,9 @@ fun MenuPrincipal(
         }
         Button(onClick = onOpenEjercicio9) {
             Text("Ejercicio 9")
+        }
+        Button(onClick = onOpenEjercicio10) {
+            Text("Ejercicio 10")
         }
     }
 }

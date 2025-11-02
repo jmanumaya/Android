@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Boletin1">
         <activity
-            android:name=".ejercicio10.Ejercicio10"
+            android:name=".ejercicio10.Ejercicio10Activity"
             android:exported="false"
             android:label="@string/title_activity_ejercicio10"
             android:theme="@style/Theme.Boletin1" />
