@@ -2,4 +2,6 @@
 <resources>
 
     <style name="Theme.PracticaListado" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.EjemploVM" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
