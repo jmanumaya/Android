@@ -4,19 +4,19 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.androidxRoom)
+
 }
 
-room {	/* Después de plugins, antes del bloque android */
+room {
     schemaDirectory("$projectDir/schemas")
 }
 
-
 android {
-    namespace = "com.example.practicalistado"
+    namespace = "com.example.practicatareasbd"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.practicalistado"
+        applicationId = "com.example.practicatareasbd"
         minSdk = 30
         targetSdk = 36
         versionCode = 1

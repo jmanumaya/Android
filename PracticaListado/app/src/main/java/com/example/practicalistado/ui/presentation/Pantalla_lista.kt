@@ -13,15 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.practicalistado.R
-import com.example.practicalistado.Rutas
-import com.example.practicalistado.data.repositories.Repositorio
-import com.example.practicalistado.domain.entities.Contacto
+import com.example.practicalistado.data.repositories.Contact
 
 // ------------------------------------------------------------
-// Fila individual de contacto
+// Fila individual de contacto (Sin cambios, es solo visual)
 // ------------------------------------------------------------
 @Composable
-fun ContactRow(contacto: Contacto) {
+fun ContactRow(contacto: Contact) {
     var mostrarDatos by remember { mutableStateOf(false) }
 
     val imagenGenero = when (contacto.genre.lowercase()) {
@@ -31,14 +29,10 @@ fun ContactRow(contacto: Contacto) {
     }
 
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
+        modifier = Modifier.fillMaxWidth().padding(8.dp)
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+            modifier = Modifier.fillMaxWidth().padding(8.dp)
         ) {
             Image(
                 painter = painterResource(id = imagenGenero),
@@ -52,31 +46,15 @@ fun ContactRow(contacto: Contacto) {
 
             Column {
                 if (mostrarDatos) {
-                    Text(
-                        text = contacto.name,
-                        fontSize = 22.sp,
-                        modifier = Modifier.padding(4.dp)
-                    )
-                    Text(
-                        text = contacto.phoneNumber,
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(4.dp)
-                    )
-                    Text(
-                        text = contacto.genre,
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(4.dp)
-                    )
+                    Text(text = contacto.name, fontSize = 22.sp, modifier = Modifier.padding(4.dp))
+                    Text(text = contacto.phoneNumber, fontSize = 20.sp, modifier = Modifier.padding(4.dp))
+                    Text(text = contacto.genre, fontSize = 20.sp, modifier = Modifier.padding(4.dp))
                 } else {
                     val iniciales = contacto.name
                         .split(" ")
                         .mapNotNull { it.firstOrNull()?.toString()?.uppercase() }
                         .joinToString("")
-                    Text(
-                        text = iniciales,
-                        fontSize = 40.sp,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Text(text = iniciales, fontSize = 40.sp, modifier = Modifier.padding(16.dp))
                 }
             }
         }
@@ -87,15 +65,18 @@ fun ContactRow(contacto: Contacto) {
 // Pantalla principal de contactos
 // ------------------------------------------------------------
 @Composable
-fun ContactsScreen(navController: NavController
-) {
-    val lista = Repositorio.getAllContacts()
+fun ContactsScreen(navController: NavController, contactViewModel: ContactViewModel) {
+
+    // CORRECCIÓN AQUÍ:
+    // Antes tenías: contactViewModel.contacts
+    // Ahora debe ser: contactViewModel.listadoContactos
+    val lista by contactViewModel.listadoContactos.collectAsState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(Rutas.NUEVO) }
+                onClick = { navController.navigate("form") }
             ) {
                 Text("+")
             }
@@ -104,9 +85,7 @@ fun ContactsScreen(navController: NavController
 
         if (lista.isEmpty()) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
                 contentAlignment = androidx.compose.ui.Alignment.Center
             ) {
                 Text("No hay contactos guardados.")
@@ -125,22 +104,18 @@ fun ContactsScreen(navController: NavController
 // Pantalla del formulario para añadir un contacto
 // ------------------------------------------------------------
 @Composable
-fun FormNewContact(navController: NavController
+fun FormNewContact(
+    navController: NavController,
+    contactViewModel: ContactViewModel
 ) {
     var name by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var genre by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier = Modifier.fillMaxWidth().padding(16.dp)
     ) {
-        Text(
-            text = "Nuevo contacto",
-            style = MaterialTheme.typography.titleLarge
-        )
-
+        Text(text = "Nuevo contacto", style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
@@ -160,11 +135,7 @@ fun FormNewContact(navController: NavController
         )
 
         Spacer(modifier = Modifier.height(8.dp))
-
-        Text(
-            text = "Género",
-            style = MaterialTheme.typography.titleMedium)
-
+        Text(text = "Género", style = MaterialTheme.typography.titleMedium)
         Spacer(modifier = Modifier.height(8.dp))
 
         Row(
@@ -173,9 +144,7 @@ fun FormNewContact(navController: NavController
         ) {
             val opcionesGenero = listOf("hombre", "mujer", "otro")
             opcionesGenero.forEach { opcion ->
-                Row(
-                    verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
                     RadioButton(
                         selected = genre == opcion,
                         onClick = { genre = opcion }
@@ -190,17 +159,17 @@ fun FormNewContact(navController: NavController
         Button(
             onClick = {
                 if (name.isNotBlank() && phoneNumber.isNotBlank() && genre.isNotBlank()) {
-                    val nuevo = Contacto(
-                        id = (0..9999).random(),
+                    val nuevo = Contact(
+                        id = 0,
                         name = name,
                         phoneNumber = phoneNumber,
                         genre = genre
                     )
-                    Repositorio.insertContact(nuevo)
-                    navController.navigate(Rutas.LISTA)
-                    name = ""
-                    phoneNumber = ""
-                    genre = ""
+
+                    // CAMBIO 4: Llamamos al ViewModel para guardar
+                    contactViewModel.addContact(nuevo)
+
+                    navController.popBackStack()
                 }
             },
             modifier = Modifier.fillMaxWidth()
