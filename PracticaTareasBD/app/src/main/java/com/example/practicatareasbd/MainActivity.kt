@@ -3,53 +3,56 @@ package com.example.practicatareasbd
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.example.practicatareasbd.data.TaskDataBase
-import com.example.practicatareasbd.ui.presentation.MainView
-import com.example.practicatareasbd.ui.presentation.TareasViewModel
+import com.example.practicatareasbd.data.ContactDataBase
+import com.example.practicatareasbd.ui.presentation.ContactListScreen
+import com.example.practicatareasbd.ui.presentation.FormularioScreen
+import com.example.practicatareasbd.ui.presentation.ContactosViewModel
 import com.example.practicatareasbd.ui.theme.PracticaTareasBDTheme
-import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
 
     companion object {
-        lateinit var database: TaskDataBase
+        // Inicialización estática simple (como en tu ejemplo original)
+        lateinit var database: ContactDataBase
     }
 
-    private val tareasViewModel: TareasViewModel by viewModels()
+    private val contactosViewModel: ContactosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
+        // Construimos la BD de contactos
         database = Room.databaseBuilder(
-            applicationContext,			            // Contexto de la aplicación
-            TaskDataBase::class.java,		// Clase de la base de datos
-            "tareas-db"				        // Nombre de la base de datos
-        ).build()					                // Se construye
+            applicationContext,
+            ContactDataBase::class.java,
+            "contactos-db"
+        ).build()
+
         setContent {
             PracticaTareasBDTheme {
-                MainNav(tareasViewModel)
+                NavigationHost(contactosViewModel)
             }
         }
     }
 }
 
-
-
-
 @Composable
-fun MainNav(tareasViewModel: TareasViewModel) {
+fun NavigationHost(viewModel: ContactosViewModel) {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "main") {
-        composable("main") {
-            MainView(navController, tareasViewModel)
+    // Definimos las rutas: "list" y "form"
+    NavHost(navController = navController, startDestination = "list") {
+        composable("list") {
+            ContactListScreen(navController, viewModel)
+        }
+        composable("form") {
+            FormularioScreen(navController, viewModel)
         }
     }
 }

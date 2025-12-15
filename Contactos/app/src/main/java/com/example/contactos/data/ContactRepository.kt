@@ -1,11 +1,9 @@
-package com.example.practicatareasbd.data
+package com.example.contactos.data
 
-import com.example.practicatareasbd.domain.Tarea
+object ContactRepository {
 
-object ListadoTareasRepository {
-
-    private var listTareas = mutableListOf(
-        Tarea(1, "Hacer Deberes", false)
+    private var listContactos = mutableListOf(
+        Contacto(1, "Hacer Deberes", false)
     )
 
     fun getAllTasks() = listTareas.toList()
@@ -21,4 +19,5 @@ object ListadoTareasRepository {
             listTareas[index] = tarea.copy(terminada = !tarea.terminada)
         }
     }
+
 }
