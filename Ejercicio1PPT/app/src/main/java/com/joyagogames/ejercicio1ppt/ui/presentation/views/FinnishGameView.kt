@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +28,8 @@ import androidx.navigation.NavController
 import com.joyagogames.ejercicio1ppt.R
 import com.joyagogames.ejercicio1ppt.data.models.Jugada
 import com.joyagogames.ejercicio1ppt.ui.presentation.GameViewModel
+import com.joyagogames.ejercicio1ppt.ui.theme.DarkGreen
+import com.joyagogames.ejercicio1ppt.ui.theme.Pink40
 import com.joyagogames.ejercicio1ppt.ui.theme.TextPrimary
 
 @Composable
@@ -118,7 +121,10 @@ fun FinnishGameView(navController: NavController, gameViewModel: GameViewModel){
                     onClick = {
                         gameViewModel.resetGame();
                         navController.navigate("mainGame")
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = DarkGreen
+                    )
                 ) {
                     Text("Volver a jugar")
                 }
@@ -126,7 +132,10 @@ fun FinnishGameView(navController: NavController, gameViewModel: GameViewModel){
                     onClick = {
                         gameViewModel.newGame();
                         navController.navigate("welcomeView")
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Pink40
+                    )
                 ) {
                     Text("Salir")
                 }
