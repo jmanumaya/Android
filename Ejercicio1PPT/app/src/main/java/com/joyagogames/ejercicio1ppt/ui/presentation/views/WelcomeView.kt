@@ -92,7 +92,7 @@ fun WelcomeView(navController: NavController, gameViewModel: GameViewModel){
                     .padding(15.dp)
                     .shadow(10.dp, shape = RoundedCornerShape(12.dp))
                     .background(color = Color.White, shape = RoundedCornerShape(12.dp))
-                    .size(250.dp, 180.dp)
+                    .size(250.dp, 240.dp)
                     .border(4.dp, color = Color.White, shape = RoundedCornerShape(12.dp)),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -102,7 +102,7 @@ fun WelcomeView(navController: NavController, gameViewModel: GameViewModel){
                     value = name,
                     onValueChange = { newValue ->
                         name = newValue
-                        showError = false
+                        showError = (newValue == "")
                     },
                     placeholder = { Text("Tu Nombre:") },
                     isError = showError,
@@ -111,8 +111,7 @@ fun WelcomeView(navController: NavController, gameViewModel: GameViewModel){
                         .padding(bottom = 5.dp)
                 )
 
-                if (name == "") {
-                    showError = true
+                if (showError) {
                     Text(
                         text = "Debes rellenar tu nombre.",
                         color = MaterialTheme.colorScheme.error,
@@ -123,16 +122,16 @@ fun WelcomeView(navController: NavController, gameViewModel: GameViewModel){
 
                 Button(
                     onClick = {
-                        if (!showError) {
+                        if (name.isNotEmpty()) {
                             gameViewModel.setName(name)
                             navController.navigate("mainGame")
                         } else {
-                            showError = true;
+                            showError = true
                             toast.show()
                         }
                     },
                     modifier = Modifier
-                        .padding(top = 5.dp)
+                        .padding(top = 10.dp)
                         .width(150.dp)
                         .height(50.dp),
                     colors = ButtonDefaults.buttonColors(
@@ -141,6 +140,24 @@ fun WelcomeView(navController: NavController, gameViewModel: GameViewModel){
                 ) {
                     Text("¡JUGAR!",
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = FontFamily.Default)
+                }
+
+                Button(
+                    onClick = {
+                        navController.navigate("historyView")
+                    },
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .width(150.dp)
+                        .height(45.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = WarningOrange
+                    )
+                ) {
+                    Text("HISTORIAL",
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily.Default)
                 }
