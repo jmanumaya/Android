@@ -1,4 +1,4 @@
-package com.example.appelhostal
+package com.example.appelhostalbien
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,23 +13,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.room.Room
-import com.example.appelhostal.data.db.AppDatabase
-import com.example.appelhostal.data.entities.ClientEntity
-import com.example.appelhostal.di.AppContainer
-import com.example.appelhostal.di.ViewModelFactory
-import com.example.appelhostal.ui.screens.AddRoomScreen
-import com.example.appelhostal.ui.screens.BookingHistoryScreen
-import com.example.appelhostal.ui.screens.BookingsScreen
-import com.example.appelhostal.ui.screens.LoginScreen
-import com.example.appelhostal.ui.screens.OwnerDashboardScreen
-import com.example.appelhostal.ui.screens.RegisterScreen
-import com.example.appelhostal.ui.screens.RoomDetailScreen
-import com.example.appelhostal.ui.screens.RoomsScreen
-import com.example.appelhostal.ui.theme.AppElHostalTheme
-import com.example.appelhostal.ui.viewmodel.AuthViewModel
-import com.example.appelhostal.ui.viewmodel.BookingsViewModel
-import com.example.appelhostal.ui.viewmodel.OwnerViewModel
-import com.example.appelhostal.ui.viewmodel.RoomsViewModel
+import com.example.appelhostalbien.data.db.AppDatabase
+import com.example.appelhostalbien.data.entities.ClientEntity
+import com.example.appelhostalbien.di.AppContainer
+import com.example.appelhostalbien.di.ViewModelFactory
+import com.example.appelhostalbien.ui.screens.AddRoomScreen
+import com.example.appelhostalbien.ui.screens.BookingHistoryScreen
+import com.example.appelhostalbien.ui.screens.BookingsScreen
+import com.example.appelhostalbien.ui.screens.LoginScreen
+import com.example.appelhostalbien.ui.screens.OwnerDashboardScreen
+import com.example.appelhostalbien.ui.screens.RegisterScreen
+import com.example.appelhostalbien.ui.screens.RoomDetailScreen
+import com.example.appelhostalbien.ui.screens.RoomsScreen
+import com.example.appelhostalbien.ui.theme.AppElHostalBienTheme
+import com.example.appelhostalbien.ui.viewmodel.AuthViewModel
+import com.example.appelhostalbien.ui.viewmodel.BookingsViewModel
+import com.example.appelhostalbien.ui.viewmodel.OwnerViewModel
+import com.example.appelhostalbien.ui.viewmodel.RoomsViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -64,11 +64,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Inicializar datos de forma segura
         lifecycleScope.launch {
             try {
                 seedOwnerAccount()
-                // Asegurar que las habitaciones existan antes de mostrar la UI
                 container.roomsRepository.seedRoomsIfEmpty()
             } catch (e: Exception) {
                 android.util.Log.e("MainActivity", "Error initializing data", e)
@@ -76,7 +74,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            AppElHostalTheme {
+            AppElHostalBienTheme {
                 MainNav(
                     authViewModel = authViewModel,
                     roomsViewModel = roomsViewModel,

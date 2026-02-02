@@ -1,12 +1,12 @@
-package com.example.appelhostal.data.db
+package com.example.appelhostalbien.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.example.appelhostal.data.entities.BookingEntity
-import com.example.appelhostal.data.entities.ClientEntity
-import com.example.appelhostal.data.entities.RoomEntity
+import com.example.appelhostalbien.data.entities.BookingEntity
+import com.example.appelhostalbien.data.entities.ClientEntity
+import com.example.appelhostalbien.data.entities.RoomEntity
 
 @Database(
     entities = [ClientEntity::class, RoomEntity::class, BookingEntity::class],
@@ -20,10 +20,9 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         val MIGRATION_1_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
-                    "ALTER TABLE clients ADD COLUMN isOwner INTEGER NOT NULL DEFAULT 0"
-                )
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Si vienes de una versión anterior sin isOwner, podrías necesitar esto.
+                // Pero como estamos empezando, fallbackToDestructiveMigration en MainActivity es suficiente.
             }
         }
     }
