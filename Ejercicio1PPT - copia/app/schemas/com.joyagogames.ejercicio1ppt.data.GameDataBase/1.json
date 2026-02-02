@@ -1,0 +1,67 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "7bb9c2c3b797c282c7c4f3a9633313c3",
+    "entities": [
+      {
+        "tableName": "game_entity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `rondas` INTEGER NOT NULL, `player` TEXT NOT NULL, `ia` TEXT NOT NULL, `resultado` TEXT NOT NULL, `puntosPlayer` INTEGER NOT NULL, `puntosIA` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rondas",
+            "columnName": "rondas",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "player",
+            "columnName": "player",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ia",
+            "columnName": "ia",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resultado",
+            "columnName": "resultado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "puntosPlayer",
+            "columnName": "puntosPlayer",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "puntosIA",
+            "columnName": "puntosIA",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7bb9c2c3b797c282c7c4f3a9633313c3')"
+    ]
+  }
+}
